@@ -1,0 +1,95 @@
+# This is an example .goreleaser.yml file with some sane defaults.
+# Make sure to check the documentation at http://goreleaser.com
+project_name: winburn
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - id: winburn
+    ldflags:
+      - -s -w -X github.com/fcjr/winburn/version.Version={{ .Version }}
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    ignore:
+      - goos: windows
+        goarch: arm64
+archives:
+  - name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64"}}x86_64
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    files:
+      - README.md
+      - completions/*
+      - manpages/*
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+nfpms:
+  - builds:
+      - winburn
+    vendor: winburn
+    homepage: https://www.leftshift.com
+    maintainer: Left Shift Logical, LLC <support@lefshift.com>
+    description: winburn CLI utility
+    formats:
+      - deb
+      - rpm
+      - apk
+brews:
+  - tap:
+      owner: fcjr
+      name: homebrew-fcjr
+    commit_author:
+      name: lefshift-bot
+      email: noreply@leftshift.com
+    homepage: https://www.leftshift.com
+    description: winburn CLI utility
+    install: |
+      bin.install "winburn"
+    caveats: "Thanks for installing the winburn CLI!"
+scoop:
+  bucket:
+    owner: fcjr
+    name: scoop-fcjr
+  commit_author:
+    name: lefshift-bot
+    email: noreply@leftshift.com
+  homepage: https://www.leftshift.com
+  description: winburn CLI utility
+snapcrafts:
+  -
+    name: winburn
+    publish: true
+    summary: winburn CLI utility
+    description: |
+      winburn is a cross-platform cli for creating bootable windows usbs.
+    grade: stable
+    confinement: strict
+    license: MIT
+    base: core20
+
+    apps:
+      winburn:
+        plugs: [
+          "network",
+          "mount-control",
+          "mount-observe",
+          "raw-volume",
+          "removable-media",
+          "optical-drive"
+        ]
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
