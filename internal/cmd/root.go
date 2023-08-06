@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/fcjr/winburn/config"
-	"github.com/fcjr/winburn/version"
+	"github.com/fcjr/winburn/internal/config"
+	"github.com/fcjr/winburn/internal/version"
 )
 
 // rootCmd represents the base command when called without any subcommands

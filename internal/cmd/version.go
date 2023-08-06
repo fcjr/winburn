@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/fcjr/winburn/validators"
-	"github.com/fcjr/winburn/version"
+	"github.com/fcjr/winburn/internal/validators"
+	"github.com/fcjr/winburn/internal/version"
 	"github.com/spf13/cobra"
 )
 

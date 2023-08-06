@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fcjr/winburn/validators"
+	"github.com/fcjr/winburn/internal/validators"
 	mcobra "github.com/muesli/mango-cobra"
 	"github.com/muesli/roff"
 	"github.com/spf13/cobra"
